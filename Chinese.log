@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.9.18)  22 JUN 2021 15:21
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.9.18)  22 JUN 2021 16:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -569,19 +569,27 @@ File: ./img/2DTrans.png Graphic file (type bmp)
 <./img/2DTrans.png>
  [1
 
-] [2] [3] [4]
-Overfull \hbox (7.3351pt too wide) in paragraph at lines 182--184
+] [2]
+File: ./img/GMM.png Graphic file (type bmp)
+<./img/GMM.png>
+File: ./img/Adaboost.png Graphic file (type bmp)
+<./img/Adaboost.png>
+ [3]
+File: ./img/Adaboost_face.png Graphic file (type bmp)
+<./img/Adaboost_face.png>
+ [4] [5] [6]
+Overfull \hbox (7.3351pt too wide) in paragraph at lines 217--219
 []\TU/FandolSong-Regular(0)/m/n/12 稀 疏 表 达 就 是 想 要 求 解 一 个 问 题，|  给 定 一 堆 稠 密 的 数 据 $\OML/cmm/m/it/12 D \OT1/cmr/m/n/12 = [] \OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 R[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 m \OMS/cmsy/m/n/12 ^^T
  []
 
-[5] [6] (./Chinese.aux) ) 
+[7] [8] (./Chinese.aux) ) 
 Here is how much of TeX's memory you used:
- 11565 strings out of 479418
- 275046 string characters out of 5884585
- 562037 words of memory out of 5000000
- 28907 multiletter control sequences out of 15000+600000
+ 11608 strings out of 479418
+ 277113 string characters out of 5884585
+ 562061 words of memory out of 5000000
+ 28947 multiletter control sequences out of 15000+600000
  539888 words of font info for 79 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,8n,81p,420b,250s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Chinese.pdf (6 pages).
+Output written on Chinese.pdf (8 pages).

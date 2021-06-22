@@ -94,7 +94,42 @@ SIFT搜索策略：BBF：回溯检查总是从优先级最高（best bin）的�
 \subsection{旋转不变、尺度不变}
 尺度不变：DoG；旋转不变：梯度直方图；光照影响：描述子归一化。
 
-\section{Adaboost}
+\section{目标检测方法（传统）}
+\subsection{混合高斯模型前景检测}
+如果已有背景知识，那么利用「背景差法」就可以求出前景：计算当前图像与背景图像的逐象素的灰 度差，再通过设置阈值来确定运动前景区域。
+加入输入的是一个视频流（拍摄同一个地方，但是会不停有人走：静态拍摄，动态场景）。那么我们要对每一个像素点“求均值”，来作为该像素点的背景点像素，
+一旦有人经过，占据了这个像素点，那么这个像素点的值脱离了均值，我们就知道了这是前景。
+
+我们利用混合高斯模型去代表背景点而不是单高斯，因为背景点说不定也是动态的，比如湖边的柳树，同一个点可能一会是柳树，一会是湖面。
+现在我们只要根据视频的输入来逐步构建高斯混合模型就行了：
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.5]{./img/GMM.png}
+    \caption{前景检测的高斯混合模型步骤}
+    \label{fig:GMM}
+\end{figure} 
+当然也不是所有的混合模型都要使用，如果某些峰值的点频次比较少就去除。
+
+\subsection{Adaboost}
+弱分类器组合成强分类器。对于分类错的样本，加大它的惩罚因子，对于精确率高的弱分类器，加大它的投票权重。
+每一轮的迭代，都要从给定惩罚因子的数据中去得到一个最优参数的弱分类器（弱分类器的形式已经给定了，比如说是线性的
+，但是没有给定线性方程的参数）。
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.4]{./img/Adaboost.png}
+    \caption{Adaboost流程}
+    \label{fig:Adaboost}
+\end{figure} 
+
+用Adaboost去人脸检测：人脸上有很多特征，这些弱特征（鼻子眼睛嘴巴...）可以用已有的弱分类器（如下图的窗口函数）去提取，但是怎么组合这些弱分类器去
+得到一个强的分类器去检测完整的人脸呢？Adaboost就可以干这个了。
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.4]{./img/Adaboost_face.png}
+    \caption{Adaboost人脸检测}
+    \label{fig:Adaboost_face}
+\end{figure} 
 
 \section{特定方法的分割}
 \subsection{Mean Shift}
@@ -193,10 +228,19 @@ $D=diag(d(1),d(2),..., d(N)),\quad d(i)=\sum_jw_{ij}$即每个点和其他所有
 
 可以用来做分类问题,比如给定C个类别的图像，然后再给定一张图像要用这C个图像线性组合而成，那么最终求的$\alpha$哪一位的值越大，就是哪一类。
 
-
 \subsection{低秩表达}
 数据矩阵X既包含结构信息，也包含噪声，因此
 可以将矩阵X分解为两个矩阵的和，一个是低秩 的，另一个是稀疏的。
+
+\section{CV中的优化方法}
+\subsection{稀疏捆绑调整：Sparse BA}
+
+\subsection{BP}
+这个就不展开了。
+
+\subsection{马尔可夫随机场}
+
+\subsection{条件随机场}
 % --------------------------------------------------------------
 %     You don't have to mess with anything below this line.
 % --------------------------------------------------------------
