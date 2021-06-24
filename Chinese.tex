@@ -234,17 +234,61 @@ $D=diag(d(1),d(2),..., d(N)),\quad d(i)=\sum_jw_{ij}$即每个点和其他所有
 
 \section{CV中的优化方法}
 \subsection{稀疏捆绑调整：Sparse BA}
-
+这个和3D CV中的稀疏重建有关，考完试之后推导学习一下。
 \subsection{BP}
-这个就不展开了。
+链式法则，这个就不展开了。
 
-\subsection{马尔可夫随机场}
+\subsection{Markov}
+这个知识点也很重要，考完试之后推导一下。现在只说下大概：HMM隐马尔可夫-->MRF马尔可夫随机场-->CRF条件随机场。
 
-\subsection{条件随机场}
+首先说明：马尔可夫相关的是生成模型，看的是联合分布。条件随机场是判别模型（给一个贴近真实环境的条件概率函数）。
+
+\subsubsection{HMM}
+设$i$时刻的状态为$y_i$,观测为$x_i$.可以想象成从4个盒子中摸彩球，只能看到彩球（观测），但是不知道从那个盒子(状态)摸出来的。
+
+HMM有两个基本假设：$x_i$只与$y_i$有关；$y_i$只与$y_{i-1}$有关。
 % --------------------------------------------------------------
 %     You don't have to mess with anything below this line.
 % --------------------------------------------------------------
 
+所以所有状态和观测的联合概率为($p(y_1)$是给定的初始概率)：
+\begin{equation}
+    \nonumber
+    \begin{array}{l}
+        P\left(x_{1}, y_{1}, \ldots, x_{n}, y_{n}\right)= 
+        P\left(y_{1}\right) P\left(x_{1} \mid y_{1}\right) \prod_{i=2}^{n} P\left(y_{i} \mid y_{i-1}\right) P\left(x_{i} \mid y_{i}\right)
+        \end{array}
+\end{equation}
+
+通过这个联合分布我们可以看出三个未知的东西:初始状态概率$p(y_1)$,所有的状态转移概率$p(y_i|y_{i-1})$，所有的观测概率$p(x_i|y_i)$。这些东西一起成为模型参数。
+
+现在我们就可以定义HMM的三个基本问题：
+\begin{itemize}
+    \item 概率计算问题：根据模型参数推导某一种观测序列$\{x_i\}$的概率。
+    \item 学习问题：根据观测序列$\{x_i\}$，估计模型参数。
+    \item 预测问题：根据模型和观测序列$\{x_i\}$，求最有可能的状态序列$\{y_i\}$.
+\end{itemize}
+
+求解这些可以用Baum-Welch,Viterbi算法（前向后向算法的改进：引入DP）。
+
+\subsubsection{MRF和CRF}
+HMM是有向图，联合概率的形式很好定义：直接相乘。那么MRF是个无向图，怎么定义联合概率分布呢？
+
+MRF引入了团(集合中任意两个节点都互相连接即为团)和势函数(满足非负性，一般为指数函数)去定义联合概率分布。
+\begin{equation}
+    \nonumber
+    P(\mathbf{x})=\frac{1}{Z} \prod_{Q \in \mathcal{C}} \psi_{Q}\left(\mathbf{x}_{Q}\right)
+\end{equation}
+$Z$为规范化因子。
+
+CRF就是给定观测$x_{i}$后状态变量$y_{j}$的MRF。
+CRF一般考虑线性链式的CRF，如下图所示：
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.5]{./img/CRF.png}
+    \caption{CRF}
+    \label{fig:CRF}
+\end{figure}
 \newpage
 \section{附录}
 
